@@ -1,0 +1,29 @@
+{
+	"appId": "com.fleetmanagement.app",
+	"appName": "Fleet Management",
+	"webDir": "www",
+	"server": {
+		"url": "https://fleet-booking-62ac4.web.app",
+		"cleartext": false,
+		"androidScheme": "https"
+	},
+	"plugins": {
+		"SplashScreen": {
+			"launchAutoHide": true,
+			"backgroundColor": "#1F2528",
+			"androidScaleType": "CENTER_CROP",
+			"showSpinner": false,
+			"splashFullScreen": true,
+			"splashImmersive": true
+		},
+		"StatusBar": {
+			"style": "DARK",
+			"backgroundColor": "#1F2528"
+		},
+		"LocalNotifications": {
+			"smallIcon": "ic_notification",
+			"iconColor": "#F2B705",
+			"sound": "default"
+		}
+	}
+}
