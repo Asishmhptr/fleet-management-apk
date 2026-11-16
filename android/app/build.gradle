@@ -34,7 +34,9 @@ android {
     }
     buildTypes {
         release {
-            signingConfig signingConfigs.release
+            if (project.hasProperty('RELEASE_STORE_FILE') || file('fleet-management.jks').exists()) {
+                signingConfig signingConfigs.release
+            }
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
