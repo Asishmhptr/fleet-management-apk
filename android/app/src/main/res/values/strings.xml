@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Fleet Management</string>
+    <string name="title_activity_main">Fleet Management</string>
+    <string name="package_name">com.fleetmanagement.app</string>
+    <string name="custom_url_scheme">com.fleetmanagement.app</string>
+    <string name="capacitor_background_geolocation_notification_icon">drawable/ic_notification</string>
+    <string name="capacitor_background_geolocation_notification_channel_name">Trip Location Tracking</string>
+    <string name="capacitor_background_geolocation_notification_color">#F2B705</string>
+</resources>

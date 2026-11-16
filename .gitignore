@@ -1,0 +1,16 @@
+node_modules/
+.gradle/
+android/app/build/
+android/.gradle/
+android/build/
+*.jks
+*.keystore
+local.properties
+*.apk
+keystore_base64.txt
+icon-source.svg
+
+# IDE
+.idea/
+*.iml
+.vscode/
