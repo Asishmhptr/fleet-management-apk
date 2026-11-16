@@ -4,6 +4,7 @@ on:
   push:
     tags:
       - 'v*'
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -49,12 +50,24 @@ jobs:
             -Pandroid.injected.signing.key.alias=${{ secrets.KEY_ALIAS }} \
             -Pandroid.injected.signing.key.password=${{ secrets.KEY_PASSWORD }}
 
-      - name: Rename APK
+      - name: Find and Stage APK
         run: |
-          mv android/app/build/outputs/apk/release/app-release.apk fleet-management.apk
+          if [ -f "android/app/build/outputs/apk/release/fleet-management.apk" ]; then
+            cp android/app/build/outputs/apk/release/fleet-management.apk fleet-management.apk
+          else
+            cp android/app/build/outputs/apk/release/*.apk fleet-management.apk
+          fi
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/v')
         with:
           files: fleet-management.apk
           generate_release_notes: true
+
+      - name: Upload Artifact (on manual workflow dispatch)
+        uses: actions/upload-artifact@v4
+        if: "!startsWith(github.ref, 'refs/tags/v')"
+        with:
+          name: fleet-management-apk
+          path: fleet-management.apk
