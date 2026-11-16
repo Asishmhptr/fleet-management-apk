@@ -23,9 +23,6 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
-
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
@@ -56,13 +53,13 @@ jobs:
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: |
           if [ -s "app/fleet-management.jks" ] && [ -n "$KEYSTORE_PASSWORD" ]; then
-            ./gradlew assembleRelease \
+            ./gradlew assembleRelease --stacktrace \
               -Pandroid.injected.signing.store.file=${{ github.workspace }}/android/app/fleet-management.jks \
               -Pandroid.injected.signing.store.password=${{ secrets.KEYSTORE_PASSWORD }} \
               -Pandroid.injected.signing.key.alias=${{ secrets.KEY_ALIAS }} \
               -Pandroid.injected.signing.key.password=${{ secrets.KEY_PASSWORD }}
           else
-            ./gradlew assembleRelease
+            ./gradlew assembleRelease --stacktrace
           fi
 
       - name: Find and Stage APK
