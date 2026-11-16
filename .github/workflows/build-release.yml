@@ -38,10 +38,12 @@ jobs:
         run: npx cap sync android || true
 
       - name: Decode keystore
-        if: env.KEYSTORE_BASE64 != ''
         env:
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
-        run: echo "$KEYSTORE_BASE64" | base64 -d > android/app/fleet-management.jks
+        run: |
+          if [ -n "$KEYSTORE_BASE64" ]; then
+            echo "$KEYSTORE_BASE64" | base64 -d > android/app/fleet-management.jks
+          fi
 
       - name: Build signed release APK
         working-directory: android
@@ -50,7 +52,7 @@ jobs:
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: |
-          if [ -f "app/fleet-management.jks" ]; then
+          if [ -s "app/fleet-management.jks" ] && [ -n "$KEYSTORE_PASSWORD" ]; then
             ./gradlew assembleRelease \
               -Pandroid.injected.signing.store.file=${{ github.workspace }}/android/app/fleet-management.jks \
               -Pandroid.injected.signing.store.password=${{ secrets.KEYSTORE_PASSWORD }} \
